@@ -2,6 +2,11 @@
 import random
 import datetime
 
+class TooManyMelonsError(ValueError):
+    def __init__(self):
+        super(TooManyMelonsError, self).__init__("No more than 100 melons!")
+    pass
+
 class AbstractMelonOrder(object):
     tax = 0
     order_type = None
@@ -14,7 +19,7 @@ class AbstractMelonOrder(object):
         self.shipped = False
         self.base_price = self.set_base_price()
 
-        if self.qty >= 100:
+        if self.qty > 100:
             raise TooManyMelonsError()
 
     def mark_shipped(self):
@@ -77,11 +82,4 @@ class InternationalMelonOrder(AbstractMelonOrder):
         """Return the country code."""
 
         return self.country_code
-
-class TooManyMelonsError(ValueError):
-    # def __init__(self):
-        # self.value = value
-        # self.msg = msg
-    pass
-
 
